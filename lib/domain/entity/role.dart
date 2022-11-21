@@ -1,17 +1,17 @@
 class Role {
   late int id;
-  final String role;
+  final String name;
 
   Role({
-    required this.role,
+    required this.name,
   });
 
   Map<String, dynamic> toMap() {
-    return {'role': role};
+    return {'name': name};
   }
 
   factory Role.toFromMap(Map<String, dynamic> json) {
-    return Role(role: json['role']);
+    return Role(name: json['name']);
   }
 }
 

@@ -1,3 +1,5 @@
+import 'package:autocar/view/admin_menu.dart';
+import 'package:autocar/view/marka_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -65,8 +67,8 @@ class LetsGoPage extends StatelessWidget {
                         margin: const EdgeInsets.only(bottom: 30),
                         child: ElevatedButton(
                           onPressed: () {
-                            // Navigator.of(context).push(
-                            //     MaterialPageRoute(builder: (context) => meditate()));
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => const AdminMenu()));
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor:

@@ -1,5 +1,7 @@
-import 'package:autocar/lets_go_page.dart';
+import 'package:autocar/common/data_base_request.dart';
+import 'package:autocar/view/lets_go_page.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'core/db/data_base_helper.dart';
 
@@ -16,9 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
