@@ -5,14 +5,14 @@ class Kuzov {
   Kuzov({this.id, this.name});
 
   factory Kuzov.fromMap(Map<String, dynamic> json) => Kuzov(
-        id: json['id'],
-        name: json['name'],
+        id: json['id_kuzod'],
+        name: json['kuzov_name'],
       );
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
+      'id_kuzov': id,
+      'kuzov_name': name,
     };
   }
 }

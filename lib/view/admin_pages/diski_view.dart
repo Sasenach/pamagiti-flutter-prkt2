@@ -1,20 +1,19 @@
-import 'package:autocar/common/data_base_request.dart';
-import 'package:autocar/core/db/data_base_helper.dart';
-import 'package:autocar/domain/entity/marka.dart';
-import 'package:autocar/view/admin_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:sqflite/sqflite.dart';
 
-class Markas extends StatefulWidget {
-  const Markas({super.key});
+import '../../common/data_base_request.dart';
+import '../../domain/entity/diski.dart';
+import 'admin_menu.dart';
+
+class Diskis extends StatefulWidget {
+  const Diskis({super.key});
 
   @override
-  State<Markas> createState() => _MarkasState();
+  State<Diskis> createState() => _DiskisState();
 }
 
-class _MarkasState extends State<Markas> {
+class _DiskisState extends State<Diskis> {
   final TextEditingController textInput = TextEditingController();
   int? selectedId;
 
@@ -41,16 +40,16 @@ class _MarkasState extends State<Markas> {
                       width: double.infinity,
                       height: 60,
                       child: TextField(
-                        decoration: InputDecoration(hintText: 'Name of marka'),
+                        decoration: InputDecoration(hintText: 'Name of diski'),
                         controller: textInput,
                       )),
                   Container(
                       width: double.infinity,
                       height: 400,
-                      child: FutureBuilder<List<Marka>>(
-                        future: DataBaseRequest.getMarkas(),
+                      child: FutureBuilder<List<Diski>>(
+                        future: DataBaseRequest.getDiski(),
                         builder: (BuildContext context,
-                            AsyncSnapshot<List<Marka>> snapshot) {
+                            AsyncSnapshot<List<Diski>> snapshot) {
                           if (!snapshot.hasData) {
                             return const Center(
                                 child: Text(
@@ -71,20 +70,20 @@ class _MarkasState extends State<Markas> {
                           }
 
                           return ListView(
-                            children: snapshot.data!.map((marka) {
+                            children: snapshot.data!.map((diski) {
                               return Center(
                                 child: ListTile(
                                   title: Text(
-                                      marka.name!), //тут может быть проблемка
+                                      diski.name!), //тут может быть проблемка
                                   onTap: () {
                                     setState(() {
-                                      selectedId = marka.id!;
-                                      textInput.text = marka.name!;
+                                      selectedId = diski.id!;
+                                      textInput.text = diski.name!;
                                     });
                                   },
                                   onLongPress: () {
                                     setState(() {
-                                      DataBaseRequest.deleteMarka(marka.id!);
+                                      DataBaseRequest.deleteDiski(diski.id!);
                                     });
                                   },
                                 ),
@@ -100,9 +99,9 @@ class _MarkasState extends State<Markas> {
           child: const Icon(Icons.save_alt_rounded),
           onPressed: () async {
             await selectedId == null
-                ? DataBaseRequest.insertMarka(Marka(name: textInput.text))
-                : DataBaseRequest.upadateMarka(
-                    Marka(id: selectedId, name: textInput.text));
+                ? DataBaseRequest.insertDiskis(Diski(name: textInput.text))
+                : DataBaseRequest.upadateDiski(
+                    Diski(id: selectedId, name: textInput.text));
             setState(() {
               textInput.clear();
               selectedId = null;

@@ -5,14 +5,14 @@ class Engine {
   Engine({this.id, this.name});
 
   factory Engine.fromMap(Map<String, dynamic> json) => Engine(
-        id: json['id'],
-        name: json['name'],
+        id: json['id_engine'],
+        name: json['engine_name'],
       );
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
+      'id_engine': id,
+      'engine_name': name,
     };
   }
 }

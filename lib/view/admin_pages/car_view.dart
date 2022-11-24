@@ -1,11 +1,13 @@
 import 'dart:ffi';
 
+import 'package:autocar/domain/entity/engine.dart';
+import 'package:autocar/domain/entity/marka.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../common/data_base_request.dart';
-import '../domain/entity/car.dart';
+import '../../common/data_base_request.dart';
+import '../../domain/entity/car.dart';
 import 'admin_menu.dart';
 
 class Cars extends StatefulWidget {
@@ -16,7 +18,7 @@ class Cars extends StatefulWidget {
 }
 
 class _CarsState extends State<Cars> {
-  final TextEditingController textName = TextEditingController();
+  final TextEditingController textCarImage = TextEditingController();
   final TextEditingController textModel = TextEditingController();
   final TextEditingController textPower = TextEditingController();
   final TextEditingController textCapacity = TextEditingController();
@@ -25,6 +27,7 @@ class _CarsState extends State<Cars> {
   final TextEditingController textKuzovId = TextEditingController();
   final TextEditingController textMarkaId = TextEditingController();
   final TextEditingController textDiskiId = TextEditingController();
+  final TextEditingController textPrice = TextEditingController();
   int? selectedId;
 
   @override
@@ -51,8 +54,16 @@ class _CarsState extends State<Cars> {
                         width: double.infinity,
                         height: 45,
                         child: TextField(
-                          decoration: InputDecoration(hintText: 'Name'),
-                          controller: textName,
+                          decoration:
+                              InputDecoration(hintText: 'Car image url'),
+                          controller: textCarImage,
+                        )),
+                    Container(
+                        width: double.infinity,
+                        height: 45,
+                        child: TextField(
+                          decoration: InputDecoration(hintText: 'Car price'),
+                          controller: textPrice,
                         )),
                     Container(
                         width: double.infinity,
@@ -136,24 +147,28 @@ class _CarsState extends State<Cars> {
                                 ),
                               ));
                             }
-          
+
                             return ListView(
                               children: snapshot.data!.map((car) {
                                 return Container(
                                   child: ListTile(
                                     title: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text('Name: ' + car.name!),
+                                        Text('Car price: ' +
+                                            car.car_price!.toString()),
+                                        Text(
+                                            'Car image url: ' + car.car_image!),
                                         Text('Model: ' + car.model!),
                                         Text('Power: ' + car.power!),
                                         Text('Capacity: ' + car.capacity!),
                                         Text('Engine capacity: ' +
                                             car.engine_capacity!),
                                         Text('Engine_id: ' +
-                                            car.engine_id!.toString()),
+                                            car.engine_id!.name!),
                                         Text('Kuzov_id: ' +
                                             car.kuzov_id!.toString()),
                                         Text('Marka_id: ' +
@@ -165,15 +180,22 @@ class _CarsState extends State<Cars> {
                                     onTap: () {
                                       setState(() {
                                         selectedId = car.id!;
-                                        textName.text = car.name!;
+                                        textPrice.text =
+                                            car.car_price!.toString();
+                                        textCarImage.text = car.car_image!;
                                         textModel.text = car.model!;
                                         textPower.text = car.power!;
                                         textCapacity.text = car.capacity!;
-                                        textEngineCapacity.text = car.engine_capacity!;
-                                        textEngineId.text = car.engine_id!.toString();
-                                        textKuzovId.text = car.kuzov_id!.toString();
-                                        textMarkaId.text = car.marka_id!.toString();
-                                        textDiskiId.text = car.diski_id!.toString();
+                                        textEngineCapacity.text =
+                                            car.engine_capacity!;
+                                        textEngineId.text =
+                                            car.engine_id!.name!;
+                                        textKuzovId.text =
+                                            car.kuzov_id!.toString();
+                                        textMarkaId.text =
+                                            car.marka_id!.id.toString();
+                                        textDiskiId.text =
+                                            car.diski_id!.toString();
                                       });
                                     },
                                     onLongPress: () {
@@ -195,29 +217,32 @@ class _CarsState extends State<Cars> {
           child: const Icon(Icons.save_alt_rounded),
           onPressed: () async {
             await selectedId == null
-                ? DataBaseRequest.insertCar(
-                    Car(name: textName.text, 
-                      model: textModel.text, 
-                      power: textPower.text,
-                      capacity: textCapacity.text,
-                      engine_capacity: textEngineCapacity.text,
-                      engine_id: int.parse(textEngineId.text),
-                      kuzov_id: int.parse(textKuzovId.text),
-                      marka_id: int.parse(textMarkaId.text),
-                      diski_id: int.parse(textEngineId.text)))
-                : DataBaseRequest.upadateCar(
-                    Car(id: selectedId, 
-                    name: textName.text, 
-                      model: textModel.text, 
-                      power: textPower.text,
-                      capacity: textCapacity.text,
-                      engine_capacity: textEngineCapacity.text,
-                      engine_id: int.parse(textEngineId.text),
-                      kuzov_id: int.parse(textKuzovId.text),
-                      marka_id: int.parse(textMarkaId.text),
-                      diski_id: int.parse(textDiskiId.text)));
+                ? DataBaseRequest.insertCar(Car(
+                    car_price: int.parse(textPrice.text),
+                    car_image: textCarImage.text,
+                    model: textModel.text,
+                    power: textPower.text,
+                    capacity: textCapacity.text,
+                    engine_capacity: textEngineCapacity.text,
+                    engine_id: Engine(id: int.parse(textEngineId.text)),
+                    kuzov_id: int.parse(textKuzovId.text),
+                    marka_id: Marka(id: int.parse(textMarkaId.text)),
+                    diski_id: int.parse(textEngineId.text)))
+                : DataBaseRequest.upadateCar(Car(
+                    id: selectedId,
+                    car_price: int.parse(textPrice.text),
+                    car_image: textCarImage.text,
+                    model: textModel.text,
+                    power: textPower.text,
+                    capacity: textCapacity.text,
+                    engine_capacity: textEngineCapacity.text,
+                    engine_id: Engine(id: int.parse(textEngineId.text)),
+                    kuzov_id: int.parse(textKuzovId.text),
+                    marka_id: Marka(id: int.parse(textMarkaId.text)),
+                    diski_id: int.parse(textDiskiId.text)));
             setState(() {
-              textName.clear();
+              textPrice.clear();
+              textCarImage.clear();
               textModel.clear();
               textPower.clear();
               textCapacity.clear();

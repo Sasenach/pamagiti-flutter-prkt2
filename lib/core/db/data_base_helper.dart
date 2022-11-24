@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DataBaseHelper {
-  static const int _version = 6;
+  static const int _version = 8;
 
   static const String tableEngine = 'Engine';
   static const String tableKuzov = 'Kuzov';
@@ -15,6 +15,7 @@ class DataBaseHelper {
   static const String tableRole = 'Role';
   static const String tableCustomer = 'Customer';
   static const String tableCar = 'Car';
+  static const String tableCarInBag = 'CarInBag';
 
   static const List<String> tablesList = [
     tableEngine,
@@ -24,41 +25,43 @@ class DataBaseHelper {
     tableRole,
     tableCustomer,
     tableCar,
+    tableCarInBag,
   ];
 
   static const String createTableEngine = '''
     CREATE TABLE Engine(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL UNIQUE
+      id_engine INTEGER PRIMARY KEY AUTOINCREMENT,
+      engine_name TEXT NOT NULL UNIQUE
     );
   ''';
   static const String createTableKuzov = '''
     CREATE TABLE Kuzov(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL UNIQUE
+      id_kuzov INTEGER PRIMARY KEY AUTOINCREMENT,
+      kuzov_name TEXT NOT NULL UNIQUE
     );
   ''';
   static const String createTableMarka = '''
     CREATE TABLE Marka(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL UNIQUE
+      id_marka INTEGER PRIMARY KEY AUTOINCREMENT,
+      marka_name TEXT NOT NULL UNIQUE
     );
   ''';
   static const String createTableDiski = '''
     CREATE TABLE Diski(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL UNIQUE
+      id_diski INTEGER PRIMARY KEY AUTOINCREMENT,
+      diski_name TEXT NOT NULL UNIQUE
     );
   ''';
   static const String createTableRole = '''
     CREATE TABLE Role(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL UNIQUE
+      id_role INTEGER PRIMARY KEY AUTOINCREMENT,
+      role_name TEXT NOT NULL UNIQUE
     );
+    insert into Role(role_name) values('admin'), ('user');
   ''';
   static const String createTableCustomer = '''
     CREATE TABLE $tableCustomer(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_customer INTEGER PRIMARY KEY AUTOINCREMENT,
       fio TEXT NOT NULL,
       login TEXT NOT NULL UNIQUE,
       password TEXT NOT NULL,
@@ -69,9 +72,10 @@ class DataBaseHelper {
   ''';
   static const String createTableCar = '''
     CREATE TABLE $tableCar(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
+      id_car INTEGER PRIMARY KEY AUTOINCREMENT,
+      car_price INTEGER NOT NULL,
       model TEXT NOT NULL,
+      car_image TEXT NOT NULL,
       power TEXT NOT NULL,
       capacity TEXT NOT NULL,
       engine_capacity TEXT NOT NULL,
@@ -85,6 +89,15 @@ class DataBaseHelper {
       FOREIGN KEY("diski_id") REFERENCES "Diski"("id")
     );
   ''';
+  static const String createTableCarInBag = '''
+    CREATE TABLE $tableCarInBag(
+      id_car_in_bag INTEGER PRIMARY KEY AUTOINCREMENT,
+      car_id INTEGER NOT NULL,
+      customer_id INTEGER NOT NULL,
+      FOREIGN KEY("car_id") REFERENCES "Car"("id_car"),
+      FOREIGN KEY("customer_id") REFERENCES "Customer"("id_customer")
+    );
+  ''';
 
   static const List<String> createTableList = [
     createTableEngine,
@@ -94,6 +107,7 @@ class DataBaseHelper {
     createTableRole,
     createTableCustomer,
     createTableCar,
+    createTableCarInBag,
   ];
 
   DataBaseHelper._privateConstructor();
@@ -146,6 +160,6 @@ class DataBaseHelper {
 
   static Future<void> devHelp(String _query) async {
     Database db = await DataBaseHelper.instance.database;
-     db.execute(_query);
+    db.execute(_query);
   }
 }

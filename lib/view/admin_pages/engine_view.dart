@@ -1,19 +1,19 @@
+import 'package:autocar/domain/entity/engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../common/data_base_request.dart';
-import '../domain/entity/kuzov.dart';
+import '../../common/data_base_request.dart';
 import 'admin_menu.dart';
 
-class Kuzovs extends StatefulWidget {
-  const Kuzovs({super.key});
+class Engines extends StatefulWidget {
+  const Engines({super.key});
 
   @override
-  State<Kuzovs> createState() => _KuzovsState();
+  State<Engines> createState() => _EnginesState();
 }
 
-class _KuzovsState extends State<Kuzovs> {
+class _EnginesState extends State<Engines> {
   final TextEditingController textInput = TextEditingController();
   int? selectedId;
 
@@ -40,16 +40,16 @@ class _KuzovsState extends State<Kuzovs> {
                       width: double.infinity,
                       height: 60,
                       child: TextField(
-                        decoration: InputDecoration(hintText: 'Name of kuzov'),
+                        decoration: InputDecoration(hintText: 'Type of engine'),
                         controller: textInput,
                       )),
                   Container(
                       width: double.infinity,
                       height: 400,
-                      child: FutureBuilder<List<Kuzov>>(
-                        future: DataBaseRequest.getKuzovs(),
+                      child: FutureBuilder<List<Engine>>(
+                        future: DataBaseRequest.getEngine(),
                         builder: (BuildContext context,
-                            AsyncSnapshot<List<Kuzov>> snapshot) {
+                            AsyncSnapshot<List<Engine>> snapshot) {
                           if (!snapshot.hasData) {
                             return const Center(
                                 child: Text(
@@ -70,20 +70,20 @@ class _KuzovsState extends State<Kuzovs> {
                           }
 
                           return ListView(
-                            children: snapshot.data!.map((kuzov) {
+                            children: snapshot.data!.map((engine) {
                               return Center(
                                 child: ListTile(
                                   title: Text(
-                                      kuzov.name!), //тут может быть проблемка
+                                      engine.name!), //тут может быть проблемка
                                   onTap: () {
                                     setState(() {
-                                      selectedId = kuzov.id!;
-                                      textInput.text = kuzov.name!;
+                                      selectedId = engine.id!;
+                                      textInput.text = engine.name!;
                                     });
                                   },
                                   onLongPress: () {
                                     setState(() {
-                                      DataBaseRequest.deleteKuzov(kuzov.id!);
+                                      DataBaseRequest.deleteEngine(engine.id!);
                                     });
                                   },
                                 ),
@@ -99,9 +99,9 @@ class _KuzovsState extends State<Kuzovs> {
           child: const Icon(Icons.save_alt_rounded),
           onPressed: () async {
             await selectedId == null
-                ? DataBaseRequest.insertKuzov(Kuzov(name: textInput.text))
-                : DataBaseRequest.upadateKuzov(
-                    Kuzov(id: selectedId, name: textInput.text));
+                ? DataBaseRequest.insertEngine(Engine(name: textInput.text))
+                : DataBaseRequest.upadateEngine(
+                    Engine(id: selectedId, name: textInput.text));
             setState(() {
               textInput.clear();
               selectedId = null;

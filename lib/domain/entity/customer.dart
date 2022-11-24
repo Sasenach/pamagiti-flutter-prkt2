@@ -3,7 +3,7 @@ class Customer {
   final String? fio;
   final String? login;
   final String? password;
-  final String email;
+  final String? email;
   final int? role_id;
 
   Customer(
@@ -11,11 +11,11 @@ class Customer {
       this.fio,
       this.login,
       this.password,
-      required this.email,
+      this.email,
       this.role_id});
 
   factory Customer.fromMap(Map<String, dynamic> json) => Customer(
-        id: json['id'],
+        id: json['id_customer'],
         fio: json['fio'],
         login: json['login'],
         password: json['password'],
@@ -25,7 +25,7 @@ class Customer {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'id_customer': id,
       'fio': fio,
       'login': login,
       'password': password,

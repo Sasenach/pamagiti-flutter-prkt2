@@ -5,14 +5,14 @@ class Diski {
   Diski({this.id, this.name});
 
   factory Diski.fromMap(Map<String, dynamic> json) => Diski(
-        id: json['id'],
-        name: json['name'],
+        id: json['id_diski'],
+        name: json['diski_name'],
       );
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
+      'id_diski': id,
+      'diski_name': name,
     };
   }
 }

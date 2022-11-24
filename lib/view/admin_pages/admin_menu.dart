@@ -1,14 +1,14 @@
 import 'package:autocar/core/db/data_base_helper.dart';
-import 'package:autocar/view/car_view.dart';
-import 'package:autocar/view/diski_view.dart';
-import 'package:autocar/view/engine_view.dart';
-import 'package:autocar/view/kuzov_view.dart';
-import 'package:autocar/view/marka_view.dart';
+import 'package:autocar/view/admin_pages/car_view.dart';
+import 'package:autocar/view/admin_pages/diski_view.dart';
+import 'package:autocar/view/admin_pages/engine_view.dart';
+import 'package:autocar/view/admin_pages/kuzov_view.dart';
+import 'package:autocar/view/admin_pages/marka_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../common/data_base_request.dart';
+import '../../common/data_base_request.dart';
 
 class AdminMenu extends StatelessWidget {
   const AdminMenu({super.key});

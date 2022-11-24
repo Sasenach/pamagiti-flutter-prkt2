@@ -1,5 +1,6 @@
-import 'package:autocar/view/admin_menu.dart';
-import 'package:autocar/view/marka_view.dart';
+import 'package:autocar/view/admin_pages/admin_menu.dart';
+import 'package:autocar/view/admin_pages/marka_view.dart';
+import 'package:autocar/view/auth/autorization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,20 +24,6 @@ class LetsGoPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                      height: 50,
-                      width: 50,
-                      margin: EdgeInsets.only(bottom: 450, right: 25),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/Mercedes-Benz-logo.png") 
-                          )
-                      ),
-                    ),
-                    ),
-                    
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(left: 25),
@@ -68,7 +55,7 @@ class LetsGoPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => const AdminMenu()));
+                                MaterialPageRoute(builder: (context) => const Autorization()));
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor:

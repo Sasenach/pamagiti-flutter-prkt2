@@ -5,14 +5,14 @@ class Marka {
   Marka({this.id, this.name});
 
   factory Marka.fromMap(Map<String, dynamic> json) => Marka(
-        id: json['id'],
-        name: json['name'],
+        id: json['id_marka'],
+        name: json['marka_name'],
       );
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
+      'id_marka': id,
+      'marka_name': name,
     };
   }
 }
